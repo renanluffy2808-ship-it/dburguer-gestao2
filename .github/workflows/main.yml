@@ -43,6 +43,24 @@ jobs:
       run: |
         yes | sdkmanager --licenses || true
 
+    - name: Garantir Recursos XML
+      run: |
+        mkdir -p app/src/main/res/values
+        if [ ! -f "app/src/main/res/values/themes.xml" ]; then
+          cat << 'EOF' > app/src/main/res/values/themes.xml
+<resources>
+    <style name="Theme.DBurgerGestao" parent="@android:style/Theme.Material.NoActionBar" />
+</resources>
+EOF
+        fi
+        if [ ! -f "app/src/main/res/values/strings.xml" ]; then
+          cat << 'EOF' > app/src/main/res/values/strings.xml
+<resources>
+    <string name="app_name">D’ Burger Gestão</string>
+</resources>
+EOF
+        fi
+
     - name: Compilar APK
       run: |
         chmod +x gradlew 2>/dev/null || true
